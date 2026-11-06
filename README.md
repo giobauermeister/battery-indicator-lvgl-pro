@@ -10,7 +10,7 @@
 </p>
 
 This project is a battery indicator component example to be used in LVGL's UI Editor.
-It includes 3 different battery indicator designs that explore XML components, data bindings and custom widgets (XML + C custom code).
+It includes battery indicator implementations that explore XML components, data bindings, custom widgets (XML + C custom code), and reactive expressions.
 
 To test each battery design, chose one of them in the `top_bar.xml` file inside `components/top_bar`:
 ```
@@ -33,13 +33,38 @@ There is a new battery indicator widget `wd_battery_v2` which has all features b
 
 All the features can be controlled via subjects.
 
-This new widget can be seen and tested on the `smartwatch_v2.xml` screen.
+Select `wd_battery_v2` in `top_bar.xml` to test it on the `smartwatch_v2.xml` screen.
+
+The latest implementation, `battery_indicator_v3`, reproduces the features of
+`wd_battery_v2` entirely as an XML component. Reactive expressions in LVGL Pro 2.1
+with LVGL 9.6 make this possible without creating a custom widget or writing C
+code for its behavior. Bindable properties drive the battery level, charging,
+low power mode, percentage display, theme, and low battery threshold.
+
+V3 is selected by default in `top_bar.xml`. Application subjects connect to its
+properties through expressions:
+
+```xml
+<battery_indicator_v3
+    align="right_mid"
+    value="{battery_value}"
+    charging="{battery_charging != 0}"
+    low_power="{low_power_mode != 0}"
+    show_percentage="{battery_show_percentage != 0}"
+    theme="{battery_theme}"
+    low_threshold="20"
+/>
+```
+
+A small preview-only registration in `battery_indicator.c` lets the Editor use
+the compiled A8 charging mask. Embedded builds use the generated asset setup;
+the indicator's behavior remains in XML.
 
 Download this repo and open the folder containing `project.xml` in LVGL Pro 2.1.0.
 
 ![alt text](gh_assets/battery_indicator_editor.png)
 
-You can also see it live in the online preview: [Battery Indicator Online Live Preview](https://viewer.lvgl.io/?repo=https://github.com/giobauermeister/battery-indicator-lvgl-editor/tree/main/battery_indicator)
+You can also see it live in the online preview: [Battery Indicator Online Live Preview](https://viewer.lvgl.io/?repo=https%3A%2F%2Fgithub.com%2Fgiobauermeister%2Fbattery-indicator-lvgl-pro%2Ftree%2Fmain)
 
 Figma design. Access [here](https://www.figma.com/design/HVvM9m0egZy0wYZDLKKPTA/Battery-Indicator).
 

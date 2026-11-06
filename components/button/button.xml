@@ -9,12 +9,9 @@
 	</consts>
 	<styles>
 		<style name="style_main" shadow_width="0" radius="51" />
-		<style name="button_disabled" bg_color="0xd3d1d1" />
 	</styles>
-	<view extends="lv_button" width="300" height="90" style_bg_color="$enabled_color">
+	<view extends="lv_button" width="300" height="90" style_bg_color="{subject == 0 ? 0xd3d1d1 : enabled_color}">
 		<style name="style_main" />
 		<lv_label text="$text" style_text_font="inter_28" style_text_color="0x474747" align="center" />
-
-		<style name="button_disabled" selector="main" enabled="{subject == 0}" />
 	</view>
 </component>

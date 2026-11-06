@@ -10,7 +10,7 @@
 		<style name="style_main" />
 		<clock align="left_mid" />
 
-		<!-- Try here the 3 different battery indicators -->
+		<!-- Choose one battery indicator implementation. -->
 
 		<!-- Old iOS battery indicator, full XML component -->
 		<!-- <battery align="right_mid" /> -->
@@ -36,7 +36,7 @@
 			theme="0"
 		/> -->
 
-		<wd_battery_v2
+		<!-- <wd_battery_v2
 			low_threshold="20"
 			align="right_mid"
 			bind_value="battery_value"
@@ -44,12 +44,17 @@
 			bind_low_power="low_power_mode"
 			bind_show_percentage="battery_show_percentage"
 			bind_theme="battery_theme"
-		/>
+		/> -->
 
-		<!-- bind_value="battery_value"
-			bind_charging="battery_charging"
-			bind_low_power="low_power_mode"
-			bind_show_percentage="battery_show_percentage" -->
+		<battery_indicator_v3
+			align="right_mid"
+			value="{battery_value}"
+			charging="{battery_charging != 0}"
+			low_power="{low_power_mode != 0}"
+			show_percentage="{battery_show_percentage != 0}"
+			theme="{battery_theme}"
+			low_threshold="20"
+		/>
 
 		<!-- <battery_indicator_v2 align="right_mid" /> -->
 	</view>

@@ -35,6 +35,11 @@ void battery_indicator_init(const char * asset_path)
 {
     battery_indicator_init_gen(asset_path);
 
+#if defined(LV_EDITOR_PREVIEW)
+    /* XML preview needs the compiled A8 mask rather than the PNG fallback. */
+    lv_xml_register_image(NULL, "img_battery_mask_v3", img_battery_mask_v3);
+#endif
+
 #if !defined(LV_EDITOR_PREVIEW)
     lv_screen_load(smartwatch_v2_create());
 #endif

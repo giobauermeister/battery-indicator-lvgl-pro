@@ -26,6 +26,12 @@
  *  STATIC PROTOTYPES
  **********************/
 
+static void top_bar_battery_indicator_v3_0_value_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void top_bar_battery_indicator_v3_0_charging_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void top_bar_battery_indicator_v3_0_low_power_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void top_bar_battery_indicator_v3_0_show_percentage_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void top_bar_battery_indicator_v3_0_theme_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
@@ -67,14 +73,13 @@ lv_obj_t * top_bar_create(lv_obj_t * parent)
         lv_obj_t * clock_0 = clock_create(lv_obj_0);
         lv_obj_set_align(clock_0, LV_ALIGN_LEFT_MID);
 
-        lv_obj_t * wd_battery_v2_0 = wd_battery_v2_create(lv_obj_0);
-        wd_battery_v2_set_low_threshold(wd_battery_v2_0, 20);
-        lv_obj_set_align(wd_battery_v2_0, LV_ALIGN_RIGHT_MID);
-        wd_battery_v2_bind_value(wd_battery_v2_0, battery_value);
-        wd_battery_v2_bind_charging(wd_battery_v2_0, battery_charging);
-        wd_battery_v2_bind_low_power(wd_battery_v2_0, low_power_mode);
-        wd_battery_v2_bind_show_percentage(wd_battery_v2_0, battery_show_percentage);
-        wd_battery_v2_bind_theme(wd_battery_v2_0, battery_theme);
+        lv_obj_t * battery_indicator_v3_0 = battery_indicator_v3_create(lv_obj_0, lv_subject_get_int(battery_value), lv_subject_get_int(battery_charging) != 0, lv_subject_get_int(low_power_mode) != 0, lv_subject_get_int(battery_show_percentage) != 0, lv_subject_get_int(battery_theme), 20);
+        lv_obj_set_align(battery_indicator_v3_0, LV_ALIGN_RIGHT_MID);
+        lv_subject_add_observer_obj(battery_value, top_bar_battery_indicator_v3_0_value_binding_cb, battery_indicator_v3_0, NULL);
+        lv_subject_add_observer_obj(battery_charging, top_bar_battery_indicator_v3_0_charging_binding_cb, battery_indicator_v3_0, NULL);
+        lv_subject_add_observer_obj(low_power_mode, top_bar_battery_indicator_v3_0_low_power_binding_cb, battery_indicator_v3_0, NULL);
+        lv_subject_add_observer_obj(battery_show_percentage, top_bar_battery_indicator_v3_0_show_percentage_binding_cb, battery_indicator_v3_0, NULL);
+        lv_subject_add_observer_obj(battery_theme, top_bar_battery_indicator_v3_0_theme_binding_cb, battery_indicator_v3_0, NULL);
 
         the_root = lv_obj_0;
     }
@@ -88,4 +93,39 @@ lv_obj_t * top_bar_create(lv_obj_t * parent)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
+
+static void top_bar_battery_indicator_v3_0_value_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    battery_indicator_v3_set_value(obj, lv_subject_get_int(battery_value));
+}
+
+static void top_bar_battery_indicator_v3_0_charging_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    battery_indicator_v3_set_charging(obj, lv_subject_get_int(battery_charging) != 0);
+}
+
+static void top_bar_battery_indicator_v3_0_low_power_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    battery_indicator_v3_set_low_power(obj, lv_subject_get_int(low_power_mode) != 0);
+}
+
+static void top_bar_battery_indicator_v3_0_show_percentage_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    battery_indicator_v3_set_show_percentage(obj, lv_subject_get_int(battery_show_percentage) != 0);
+}
+
+static void top_bar_battery_indicator_v3_0_theme_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    battery_indicator_v3_set_theme(obj, lv_subject_get_int(battery_theme));
+}
 

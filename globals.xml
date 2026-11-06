@@ -58,6 +58,11 @@
 			color_format="a8"
 		/>
 		<data
+			name="img_battery_mask_v3"
+			src_path="images/img_battery_mask_v2.png"
+			color_format="a8"
+		/>
+		<data
 			name="img_background"
 			src_path="images/img_background.png"
 			color_format="rgb565"

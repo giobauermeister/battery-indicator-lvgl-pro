@@ -79,6 +79,8 @@ const void * img_thunder_small_v2 = NULL;
 extern const void * img_thunder_small_v2_data;
 const void * img_battery_mask_v2 = NULL;
 extern const void * img_battery_mask_v2_data;
+const void * img_battery_mask_v3 = NULL;
+extern const void * img_battery_mask_v3_data;
 const void * img_background = NULL;
 extern const void * img_background_data;
 const void * img_background_light = NULL;
@@ -185,6 +187,10 @@ void battery_indicator_init_gen(const char * asset_path)
         if (!img_battery_mask_v2) {
             img_battery_mask_v2 = &img_battery_mask_v2_data;
         }
+        /* img_battery_mask_v3 */
+        if (!img_battery_mask_v3) {
+            img_battery_mask_v3 = &img_battery_mask_v3_data;
+        }
         /* img_background */
         if (!img_background) {
             img_background = &img_background_data;
@@ -263,6 +269,7 @@ void battery_indicator_init_gen(const char * asset_path)
     lv_xml_register_image(NULL, "img_thunder_v2", img_thunder_v2);
     lv_xml_register_image(NULL, "img_thunder_small_v2", img_thunder_small_v2);
     lv_xml_register_image(NULL, "img_battery_mask_v2", img_battery_mask_v2);
+    lv_xml_register_image(NULL, "img_battery_mask_v3", img_battery_mask_v3);
     lv_xml_register_image(NULL, "img_background", img_background);
     lv_xml_register_image(NULL, "img_background_light", img_background_light);
 #endif

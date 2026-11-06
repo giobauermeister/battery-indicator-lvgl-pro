@@ -5,6 +5,7 @@ list(
   ${CMAKE_CURRENT_LIST_DIR}/battery_indicator.c
   ${CMAKE_CURRENT_LIST_DIR}/components/battery_indicator_2/battery_indicator_2_gen.c
   ${CMAKE_CURRENT_LIST_DIR}/components/battery_indicator_v2/battery_indicator_v2_gen.c
+  ${CMAKE_CURRENT_LIST_DIR}/components/battery_indicator_v3/battery_indicator_v3_gen.c
   ${CMAKE_CURRENT_LIST_DIR}/components/battery_indicator/battery_gen.c
   ${CMAKE_CURRENT_LIST_DIR}/components/button/button_gen.c
   ${CMAKE_CURRENT_LIST_DIR}/components/charge_slider/charge_slider_gen.c
@@ -22,6 +23,7 @@ list(
   ${CMAKE_CURRENT_LIST_DIR}/images/img_background_data.c
   ${CMAKE_CURRENT_LIST_DIR}/images/img_background_light_data.c
   ${CMAKE_CURRENT_LIST_DIR}/images/img_battery_mask_v2_data.c
+  ${CMAKE_CURRENT_LIST_DIR}/images/img_battery_mask_v3_data.c
   ${CMAKE_CURRENT_LIST_DIR}/images/img_charging_data.c
   ${CMAKE_CURRENT_LIST_DIR}/images/img_charging_no_stroke_data.c
   ${CMAKE_CURRENT_LIST_DIR}/images/img_charging_small_data.c

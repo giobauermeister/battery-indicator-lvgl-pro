@@ -1,0 +1,188 @@
+<component>
+	<!-- V3: wd_battery_v2 behavior in pure XML, using bindable props and reactive expressions. -->
+	<previews>
+		<preview width="100" height="100" style_bg_color="0x2f2f2f" />
+	</previews>
+
+	<api>
+		<prop name="value" type="int" default="50" bindable="true" />
+		<prop name="charging" type="bool" default="false" bindable="true" />
+		<prop name="low_power" type="bool" default="false" bindable="true" />
+		<prop
+			name="show_percentage"
+			type="bool"
+			default="true"
+			bindable="true"
+		/>
+		<prop
+			name="theme"
+			type="int"
+			default="0"
+			bindable="true"
+			help="0: light, 1: dark"
+		/>
+		<prop name="low_threshold" type="int" default="20" bindable="true" />
+	</api>
+
+	<consts>
+		<color name="light_grey" value="0x808080" />
+		<color name="dark_grey" value="0xB2B2B2" />
+		<color name="white" value="0xFFFFFF" />
+		<color name="black" value="0x000000" />
+		<color name="green" value="0x37C557" />
+		<color name="red" value="0xFD3B2F" />
+		<color name="yellow" value="0xFECC0B" />
+	</consts>
+
+	<styles>
+		<style name="container" border_width="0" bg_opa="0" pad_all="0" />
+		<style name="tip" border_width="0" />
+		<style name="hidden_knob" opa="0" />
+		<style
+			name="outline_border"
+			radius="14"
+			border_width="3"
+			bg_opa="0"
+			pad_all="0"
+		/>
+		<style name="outline_slider" radius="8" bg_opa="0" />
+		<style name="outline_fill" radius="8" />
+		<style name="charging_mask" bitmap_mask_src="img_battery_mask_v3" />
+		<style name="percentage_fill" radius="0" />
+		<style name="percentage_background" bg_opa="255" />
+		<style
+			name="percentage_text"
+			border_width="0"
+			bg_opa="0"
+			pad_all="0"
+			layout="flex"
+			flex_flow="row"
+			pad_column="2"
+			pad_top="0"
+		/>
+	</styles>
+
+	<view extends="lv_obj" width="79" height="38" scrollable="false">
+		<style name="container" />
+
+		<lv_obj
+			name="battery_tip_container"
+			width="4"
+			height="12"
+			align="right_mid"
+			scrollable="false"
+			style_radius="0"
+			style_border_width="0"
+			style_pad_all="0"
+			style_bg_opa="0"
+		>
+			<lv_obj
+				name="battery_tip"
+				width="12"
+				height="12"
+				align="right_mid"
+				style_bg_color="{(show_percentage AND value == 100) ? (low_power ? yellow : (value LE low_threshold ? red : (charging ? green : (theme == 1 ? black : white)))) : (theme == 1 ? dark_grey : light_grey)}"
+			>
+				<style name="tip" />
+			</lv_obj>
+		</lv_obj>
+
+		<lv_obj
+			name="battery_mode_outline"
+			width="72"
+			height="38"
+			align="left_mid"
+			scrollable="false"
+			hidden="{show_percentage}"
+		>
+			<style name="container" />
+			<lv_obj
+				name="mask_container"
+				width="72"
+				height="38"
+				align="left_mid"
+				scrollable="false"
+			>
+				<style name="container" />
+				<style name="charging_mask" enabled="{charging}" />
+				<lv_obj
+					name="battery_border"
+					width="72"
+					height="38"
+					align="left_mid"
+					scrollable="false"
+					style_border_color="{theme == 1 ? dark_grey : light_grey}"
+				>
+					<style name="outline_border" />
+					<lv_slider
+						name="battery_slider_a_mode"
+						width="60"
+						height="26"
+						min_value="0"
+						max_value="100"
+						value="{value}"
+						align="left_mid"
+						x="3"
+						scrollable="false"
+						style_bg_color-indicator="{low_power ? yellow : (value LE low_threshold ? red : (charging ? green : (theme == 1 ? black : white)))}"
+					>
+						<style name="outline_slider" />
+						<style name="outline_fill" selector="indicator" />
+						<style name="hidden_knob" selector="knob" />
+					</lv_slider>
+				</lv_obj>
+			</lv_obj>
+			<lv_image
+				name="img_thunder_charging"
+				src="img_thunder_v2"
+				align="center"
+				hidden="{!charging}"
+				style_image_recolor="{black}"
+				style_image_recolor_opa="{theme == 1 ? 255 : 0}"
+			/>
+		</lv_obj>
+
+		<lv_slider
+			name="battery_slider_b_mode"
+			width="72"
+			height="38"
+			min_value="0"
+			max_value="100"
+			value="{value}"
+			align="left_mid"
+			scrollable="false"
+			hidden="{!show_percentage}"
+			style_radius="14"
+			style_bg_color="{theme == 1 ? dark_grey : light_grey}"
+			style_bg_color-indicator="{low_power ? yellow : (value LE low_threshold ? red : (charging ? green : (theme == 1 ? black : white)))}"
+		>
+			<style name="hidden_knob" selector="knob" />
+			<style name="percentage_fill" selector="indicator" />
+			<style name="percentage_background" />
+			<lv_obj
+				name="text_indicator_container"
+				width="content"
+				height="content"
+				align="center"
+			>
+				<style name="percentage_text" />
+				<lv_label
+					name="pct_text"
+					text="{value}"
+					style_text_font="font_inter_semibold_30"
+					style_text_letter_space="-1"
+					style_text_align="left"
+					style_text_color="{low_power ? black : ((value LE low_threshold OR charging) ? white : (theme == 1 ? white : black))}"
+				/>
+				<lv_image
+					name="img_thunder_charging_small"
+					src="img_thunder_small_v2"
+					style_pad_top="13"
+					hidden="{!charging}"
+					style_image_recolor="{black}"
+					style_image_recolor_opa="{charging AND low_power ? 255 : 0}"
+				/>
+			</lv_obj>
+		</lv_slider>
+	</view>
+</component>

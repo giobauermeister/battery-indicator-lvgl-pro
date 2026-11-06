@@ -109,6 +109,7 @@ extern const void * img_thunder_transparent;
 extern const void * img_thunder_v2;
 extern const void * img_thunder_small_v2;
 extern const void * img_battery_mask_v2;
+extern const void * img_battery_mask_v3;
 extern const void * img_background;
 extern const void * img_background_light;
 
@@ -154,6 +155,7 @@ void battery_indicator_init_gen(const char * asset_path);
 /*Include all the widgets, components and screens of this library*/
 #include "components/battery_indicator_2/battery_indicator_2_gen.h"
 #include "components/battery_indicator_v2/battery_indicator_v2_gen.h"
+#include "components/battery_indicator_v3/battery_indicator_v3_gen.h"
 #include "components/battery_indicator/battery_gen.h"
 #include "components/button/button_gen.h"
 #include "components/charge_slider/charge_slider_gen.h"
