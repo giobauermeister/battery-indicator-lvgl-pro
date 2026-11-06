@@ -56,6 +56,12 @@
         <subject_set subject="battery_theme" value="0" />
         <wait ms="50" />
         <screenshot_compare path="battery_low_power.png" />
+        <!-- Low power keeps priority when the value crosses the red threshold. -->
+        <subject_set subject="battery_value" value="50" />
+        <wait ms="50" />
+        <subject_set subject="battery_value" value="20" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_low_power.png" />
         <subject_set subject="battery_value" value="100" />
         <subject_set subject="battery_charging" value="0" />
         <subject_set subject="low_power_mode" value="0" />

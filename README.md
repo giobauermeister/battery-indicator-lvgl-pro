@@ -51,34 +51,4 @@ Tested in a real hardware. Waveshare smartwatch: [https://www.waveshare.com/esp3
 
 Please visit [https://lvgl.io/editor](https://lvgl.io/editor) for more information.
 
-
-## LVGL Pro 2.1
-
-This project targets LVGL 9.6.0 and is validated and generated with LVGL Pro CLI 2.1.0.
-From the directory containing `project.xml`, run:
-
-```sh
-lvglpro validate "$PWD"
-lvglpro build
-lvglpro compile "$PWD" --target cli
-lvglpro run-all-tests "$PWD"
-lvglpro compile "$PWD" --target editor
-```
-
-`lvglpro` is the local CLI wrapper; `build` generates the C sources and compiles
-with `--target editor`. Edit the XML and custom C sources, then regenerate;
-never hand-edit `*_gen.c`, `*_gen.h`, or `*_private_gen.h`. Tests use a separate
-CLI runtime, so rebuild it before testing custom C changes. The final compile
-restores the Editor build configuration.
-
-The global subjects `charging` and `show_percentage` are now named
-`battery_charging` and `battery_show_percentage` to avoid conflicts with widget
-API properties in the 2.1 validator. Widget property and binding names are
-unchanged. Generated global subjects are now `lv_subject_t *`: pass them directly
-to `lv_subject_get_int` / `lv_subject_set_int`, without `&`.
-
-Custom widget parsers use the standalone `lv_xml_private` headers. The unused
-charging animation timelines were removed from `wd_battery_v2.xml` because 2.1
-supports XML timelines in components and screens, but not widgets. Charging still
-switches immediately through the existing widget logic. Indicator thresholds,
-colors, masks, themes, and subject defaults retain their existing behavior.
+This project targets LVGL Pro 2.1 and LVGL 9.6.

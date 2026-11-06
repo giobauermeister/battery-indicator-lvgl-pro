@@ -46,13 +46,13 @@ void wd_battery_constructor_hook(lv_obj_t * obj)
     wd_battery_t * battery = (wd_battery_t *)obj;
 
     /* Initial UI state derived from props (defaults come from <api>) */
-    if(battery->charging_icon) lv_obj_add_flag(battery->charging_icon, LV_OBJ_FLAG_HIDDEN);
+    if(battery->charging_icon) lv_obj_set_hidden(battery->charging_icon, true);
 
     if(battery->slider_indicator) {
         lv_slider_set_value(battery->slider_indicator, battery->value, LV_ANIM_OFF);
         lv_obj_add_event_cb(battery->slider_indicator, slider_value_changed_cb,
                             LV_EVENT_VALUE_CHANGED, battery);
-        lv_obj_remove_flag(battery->slider_indicator, LV_OBJ_FLAG_CLICKABLE);
+        lv_obj_set_clickable(battery->slider_indicator, false);
     }
 
     if(battery->pct_text) lv_label_set_text_fmt(battery->pct_text, "%d", (int)battery->value);
@@ -186,7 +186,7 @@ static void update_battery_widget(wd_battery_t * battery)
     /* Charging icon visible only when charging=1 */
     if(battery->charging_icon) {
         if(battery->charging) {
-            lv_obj_remove_flag(battery->charging_icon, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_hidden(battery->charging_icon, false);
 
             if(battery->low_power) {
                 icon_recolor_dark(battery->charging_icon);
@@ -194,7 +194,7 @@ static void update_battery_widget(wd_battery_t * battery)
                 icon_recolor_none(battery->charging_icon);
             }
         } else {
-            lv_obj_add_flag(battery->charging_icon, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_hidden(battery->charging_icon, true);
             icon_recolor_none(battery->charging_icon);
         }
     }

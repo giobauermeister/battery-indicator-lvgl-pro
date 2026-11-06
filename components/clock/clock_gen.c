@@ -47,7 +47,7 @@ lv_obj_t * clock_create(lv_obj_t * parent)
         lv_style_init(&style_dark);
 
         lv_style_set_text_font(&style_main, font_hour_32);
-        lv_style_set_text_color(&style_light, lv_color_hex(0xff0000));
+        lv_style_set_text_color(&style_light, lv_color_hex(0xffffff));
         lv_style_set_text_color(&style_dark, lv_color_hex(0x000000));
 
         style_inited = true;

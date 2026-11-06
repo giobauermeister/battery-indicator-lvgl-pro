@@ -32,13 +32,9 @@
         <lv_obj name="battery_tip_container" width="5" height="12" style_radius="0" style_border_width="0" scrollable="false" align="right_mid" style_pad_all="0" style_bg_opa="0">
             <lv_obj name="battery_tip" width="12" height="12" align="right_mid">
                 <style name="tip_default" />
-                <bind_state_if_lt ref_value="100" subject="battery_value" state="user_1"/>
-                <bind_state_if_eq ref_value="100" subject="battery_value" state="user_2"/>
-                <bind_state_if_eq ref_value="1" subject="low_power_mode" state="user_3"/>
-                <bind_state_if_eq ref_value="0" subject="low_power_mode" state="user_4"/>
-                <style name="tip_default" selector="main|user_1"/>
-                <style name="tip_green" selector="main|user_2|user_4"/>
-                <style name="tip_yellow" selector="main|user_2|user_3"/>
+                <style name="tip_default" selector="main" enabled="{battery_value &lt; 100}" />
+                <style name="tip_green" selector="main" enabled="{battery_value == 100 &amp;&amp; low_power_mode == 0}" />
+                <style name="tip_yellow" selector="main" enabled="{battery_value == 100 &amp;&amp; low_power_mode == 1}" />
             </lv_obj>
         </lv_obj>
 
@@ -47,11 +43,9 @@
             <style name="battery_indicator" selector="indicator"/>
             <style name="battery_background"  selector="main"/>
 
-            <bind_state_if_le ref_value="20" subject="battery_value" state="user_1"/>
-            <style name="indicator_red" selector="indicator|user_1"/>
+            <style name="indicator_red" selector="indicator" enabled="{battery_value &lt;= 20}" />
 
-            <bind_state_if_eq ref_value="1" subject="low_power_mode" state="user_2"/>
-            <style name="indicator_yellow" selector="indicator|user_2"/>
+            <style name="indicator_yellow" selector="indicator" enabled="{low_power_mode == 1}" />
 
             <lv_obj name="text_indicator" width="content" height="content" scrollable="false" align="center">
                 <style name="text_indicator_container" />
@@ -63,8 +57,7 @@
                     <bind_style name="battery_value_text_color_white" subject="low_power_mode" ref_value="0"/>
                 </lv_label>
 
-                <lv_image src="img_charging_small" style_pad_top="13" >
-                    <bind_flag_if_eq subject="battery_charging" ref_value="0" flag="hidden"/>
+                <lv_image src="img_charging_small" style_pad_top="13" hidden="{battery_charging == 0}">
                     <bind_style name="battery_icon_low_power_color" subject="low_power_mode" ref_value="1"/>
                     <bind_style name="battery_icon_normal_color" subject="low_power_mode" ref_value="0"/>
                 </lv_image>

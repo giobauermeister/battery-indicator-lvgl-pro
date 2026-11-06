@@ -95,6 +95,10 @@ void wd_battery_v2_event_hook(lv_event_t * e);
 static void wd_battery_v2_constructor(const lv_obj_class_t * class_p, lv_obj_t * obj);
 static void wd_battery_v2_destructor(const lv_obj_class_t * class_p, lv_obj_t * obj);
 static void wd_battery_v2_event(const lv_obj_class_t * class_p, lv_event_t * e);
+static void wd_battery_v2_battery_mode_outline_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void wd_battery_v2_img_thunder_charging_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void wd_battery_v2_battery_slider_b_mode_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
+static void wd_battery_v2_img_thunder_charging_small_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject);
 
 /**********************
  *  STATIC VARIABLES
@@ -238,9 +242,9 @@ static void wd_battery_v2_constructor(const lv_obj_class_t * class_p, lv_obj_t *
         lv_obj_set_height(battery_mode_outline, BATTERY_HEIGHT);
         lv_obj_set_align(battery_mode_outline, LV_ALIGN_LEFT_MID);
         lv_obj_set_scrollable(battery_mode_outline, false);
+        lv_subject_add_observer_obj(battery_show_percentage, wd_battery_v2_battery_mode_outline_hidden_binding_cb, battery_mode_outline, NULL);
         widget->battery_mode_outline = battery_mode_outline;
         lv_obj_add_style(battery_mode_outline, &style_a_battery_outline, 0);
-        lv_obj_bind_flag_if_eq(battery_mode_outline, battery_show_percentage, LV_OBJ_FLAG_HIDDEN, 1);
         lv_obj_t * mask_container = lv_obj_create(battery_mode_outline);
         lv_obj_set_name(mask_container, "mask_container");
         lv_obj_set_width(mask_container, BATTERY_WIDTH);
@@ -278,8 +282,8 @@ static void wd_battery_v2_constructor(const lv_obj_class_t * class_p, lv_obj_t *
         lv_obj_set_name(img_thunder_charging, "img_thunder_charging");
         lv_image_set_src(img_thunder_charging, img_thunder_v2);
         lv_obj_set_align(img_thunder_charging, LV_ALIGN_CENTER);
+        lv_subject_add_observer_obj(battery_charging, wd_battery_v2_img_thunder_charging_hidden_binding_cb, img_thunder_charging, NULL);
         widget->img_thunder_charging = img_thunder_charging;
-        lv_obj_bind_flag_if_eq(img_thunder_charging, battery_charging, LV_OBJ_FLAG_HIDDEN, 0);
 
         lv_obj_t * battery_slider_b_mode = lv_slider_create(obj);
         lv_obj_set_name(battery_slider_b_mode, "battery_slider_b_mode");
@@ -291,8 +295,8 @@ static void wd_battery_v2_constructor(const lv_obj_class_t * class_p, lv_obj_t *
         lv_obj_set_align(battery_slider_b_mode, LV_ALIGN_LEFT_MID);
         lv_obj_set_scrollable(battery_slider_b_mode, false);
         lv_slider_bind_value(battery_slider_b_mode, battery_value);
+        lv_subject_add_observer_obj(battery_show_percentage, wd_battery_v2_battery_slider_b_mode_hidden_binding_cb, battery_slider_b_mode, NULL);
         widget->battery_slider_b_mode = battery_slider_b_mode;
-        lv_obj_bind_flag_if_eq(battery_slider_b_mode, battery_show_percentage, LV_OBJ_FLAG_HIDDEN, 0);
         lv_obj_add_style(battery_slider_b_mode, &hidden, LV_PART_KNOB);
         lv_obj_add_style(battery_slider_b_mode, &style_b_battery_indicator, LV_PART_INDICATOR);
         lv_obj_add_style(battery_slider_b_mode, &style_b_battery_background, LV_PART_MAIN);
@@ -316,8 +320,8 @@ static void wd_battery_v2_constructor(const lv_obj_class_t * class_p, lv_obj_t *
         lv_obj_set_name(img_thunder_charging_small, "img_thunder_charging_small");
         lv_image_set_src(img_thunder_charging_small, img_thunder_small_v2);
         lv_obj_set_style_pad_top(img_thunder_charging_small, 13, 0);
+        lv_subject_add_observer_obj(battery_charging, wd_battery_v2_img_thunder_charging_small_hidden_binding_cb, img_thunder_charging_small, NULL);
         widget->img_thunder_charging_small = img_thunder_charging_small;
-        lv_obj_bind_flag_if_eq(img_thunder_charging_small, battery_charging, LV_OBJ_FLAG_HIDDEN, 0);
 
         the_root = obj;
     }
@@ -347,3 +351,30 @@ static void wd_battery_v2_event(const lv_obj_class_t * class_p, lv_event_t * e)
     wd_battery_v2_event_hook(e);
 }
 
+static void wd_battery_v2_battery_mode_outline_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    lv_obj_set_hidden(obj, lv_subject_get_int(battery_show_percentage) == 1);
+}
+
+static void wd_battery_v2_img_thunder_charging_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    lv_obj_set_hidden(obj, lv_subject_get_int(battery_charging) == 0);
+}
+
+static void wd_battery_v2_battery_slider_b_mode_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    lv_obj_set_hidden(obj, lv_subject_get_int(battery_show_percentage) == 0);
+}
+
+static void wd_battery_v2_img_thunder_charging_small_hidden_binding_cb(lv_observer_t * observer, lv_subject_t * subject)
+{
+    LV_UNUSED(subject);
+    lv_obj_t * obj = lv_observer_get_target_obj(observer);
+    lv_obj_set_hidden(obj, lv_subject_get_int(battery_charging) == 0);
+}

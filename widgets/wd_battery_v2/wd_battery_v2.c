@@ -261,19 +261,19 @@ static void update_battery_v2_widget(wd_battery_v2_t * battery)
     lv_obj_set_style_text_color(battery->pct_text, text_color, 0);
 
     if (battery->charging) {
-        lv_obj_clear_flag(battery->img_thunder_charging, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_hidden(battery->img_thunder_charging, false);
     } else {
-        lv_obj_add_flag(battery->img_thunder_charging, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_hidden(battery->img_thunder_charging, true);
     }
     if(battery->theme == WD_THEME_LIGHT) icon_recolor_none(battery->img_thunder_charging);
     if(battery->theme == WD_THEME_DARK) icon_recolor_dark(battery->img_thunder_charging);
 
     if (battery->charging) {
-        lv_obj_clear_flag(battery->img_thunder_charging_small, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_hidden(battery->img_thunder_charging_small, false);
         if (battery->low_power) icon_recolor_dark(battery->img_thunder_charging_small);
         else                    icon_recolor_none(battery->img_thunder_charging_small);
     } else {
-        lv_obj_add_flag(battery->img_thunder_charging_small, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_hidden(battery->img_thunder_charging_small, true);
         icon_recolor_none(battery->img_thunder_charging_small);
     }
 }

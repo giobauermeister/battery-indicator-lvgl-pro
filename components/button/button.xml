@@ -15,7 +15,6 @@
 		<style name="style_main" />
 		<lv_label text="$text" style_text_font="inter_28" style_text_color="0x474747" align="center" />
 
-		<bind_state_if_eq ref_value="0" subject="$subject" state="user_1" />
-		<style name="button_disabled" selector="main|user_1" />
+		<style name="button_disabled" selector="main" enabled="{subject == 0}" />
 	</view>
 </component>

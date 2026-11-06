@@ -32,16 +32,12 @@
                 <style name="indicator" />
                 <style name="slider_indicator" selector="indicator"/>
                 <style name="hidden" selector="knob"/>
-                <bind_state_if_le ref_value="20" subject="battery_value" state="user_1"/>
-                <style name="indicator_red" selector="indicator|user_1"/>
+                <style name="indicator_red" selector="indicator" enabled="{battery_value &lt;= 20}" />
 
-                <bind_state_if_eq ref_value="1" subject="low_power_mode" state="user_2"/>
-                <style name="indicator_yellow" selector="indicator|user_2"/>
+                <style name="indicator_yellow" selector="indicator" enabled="{low_power_mode == 1}" />
             </lv_slider>
         </lv_obj>
 
-        <lv_image src="img_charging" align="left_mid" style_pad_left="45">
-            <bind_flag_if_eq subject="battery_charging" ref_value="0" flag="hidden"/>
-        </lv_image>
+        <lv_image src="img_charging" align="left_mid" style_pad_left="45" hidden="{battery_charging == 0}" />
     </view>
 </component>
