@@ -26,7 +26,7 @@ To test each battery design, chose one of them in the `top_bar.xml` file inside 
 <wd_battery bind_charging="battery_charging" bind_low_power="low_power_mode" bind_value="battery_value" align="right_mid"></wd_battery>
 ```
 
-There is a new battery indicator widget `wd_battery_v2` which has all features built in:
+There is a battery indicator widget `wd_battery_v2` which has all features built in:
 - Percetage mode
 - Charging icon mask
 - Dark/Light themes
