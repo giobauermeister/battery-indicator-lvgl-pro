@@ -1,0 +1,102 @@
+<!-- All five implementations share the same inputs. Reference images are
+     reviewed migration baselines for thresholds, color priority, masks and modes. -->
+<test width="410" height="502">
+    <view width="100%" height="100%" style_border_width="0" style_radius="0" style_pad_all="0" style_bg_color="0x505050" style_text_color="0xFFFFFF" scrollable="false">
+        <lv_label text="XML outline" x="20" y="50" style_text_font="font_inter_semibold_25" />
+        <battery x="290" y="45" />
+        <lv_label text="XML percentage" x="20" y="135" style_text_font="font_inter_semibold_25" />
+        <battery_indicator_2 x="290" y="130" />
+        <lv_label text="XML masked" x="20" y="220" style_text_font="font_inter_semibold_25" />
+        <battery_indicator_v2 x="290" y="215" />
+        <lv_label text="Widget" x="20" y="305" style_text_font="font_inter_semibold_25" />
+        <wd_battery bind_value="battery_value" bind_charging="battery_charging" bind_low_power="low_power_mode" x="290" y="300" />
+        <lv_label text="Widget v2" x="20" y="390" style_text_font="font_inter_semibold_25" />
+        <wd_battery_v2 low_threshold="20" bind_value="battery_value" bind_charging="battery_charging" bind_low_power="low_power_mode" bind_show_percentage="battery_show_percentage" bind_theme="battery_theme" x="290" y="385" />
+    </view>
+    <steps>
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_normal.png" />
+        <subject_set subject="battery_value" value="21" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_threshold_above.png" />
+        <subject_set subject="battery_value" value="20" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_threshold_low.png" />
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="1" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_charging.png" />
+        <subject_set subject="battery_value" value="20" />
+        <subject_set subject="battery_charging" value="1" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_charging_low.png" />
+        <subject_set subject="battery_value" value="20" />
+        <subject_set subject="battery_charging" value="1" />
+        <subject_set subject="low_power_mode" value="1" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_low_power.png" />
+        <subject_set subject="battery_value" value="100" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_full.png" />
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="1" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_percentage.png" />
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="1" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="1" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_percentage_charging.png" />
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="1" />
+        <subject_set subject="low_power_mode" value="1" />
+        <subject_set subject="battery_show_percentage" value="1" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_percentage_low_power.png" />
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="1" />
+        <subject_set subject="battery_theme" value="1" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_dark_percentage.png" />
+        <subject_set subject="battery_value" value="50" />
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="battery_theme" value="1" />
+        <wait ms="50" />
+        <screenshot_compare path="battery_dark_outline.png" />
+    </steps>
+</test>

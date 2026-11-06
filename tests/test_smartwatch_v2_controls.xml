@@ -1,0 +1,31 @@
+<test width="410" height="502">
+    <view extends="smartwatch_v2" />
+    <steps>
+        <subject_set subject="battery_charging" value="0" />
+        <subject_set subject="battery_show_percentage" value="0" />
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_theme" value="0" />
+        <wait ms="50" />
+        <click_at x="290" y="195" />
+        <wait ms="50" />
+        <subject_compare subject="battery_charging" value="1" />
+        <click_at x="290" y="267" />
+        <wait ms="50" />
+        <subject_compare subject="battery_show_percentage" value="1" />
+        <click_at x="290" y="339" />
+        <wait ms="50" />
+        <subject_compare subject="low_power_mode" value="1" />
+        <click_at x="290" y="411" />
+        <wait ms="50" />
+        <subject_compare subject="battery_theme" value="1" />
+        <click_at x="290" y="195" />
+        <click_at x="290" y="267" />
+        <click_at x="290" y="339" />
+        <click_at x="290" y="411" />
+        <wait ms="50" />
+        <subject_compare subject="battery_charging" value="0" />
+        <subject_compare subject="battery_show_percentage" value="0" />
+        <subject_compare subject="low_power_mode" value="0" />
+        <subject_compare subject="battery_theme" value="0" />
+    </steps>
+</test>

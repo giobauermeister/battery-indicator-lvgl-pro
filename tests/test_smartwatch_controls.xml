@@ -1,0 +1,20 @@
+<test width="410" height="502">
+    <view extends="smartwatch" />
+    <steps>
+        <subject_set subject="low_power_mode" value="0" />
+        <subject_set subject="battery_charging" value="0" />
+        <wait ms="50" />
+        <click_at x="205" y="272" />
+        <wait ms="50" />
+        <subject_compare subject="low_power_mode" value="1" />
+        <click_at x="205" y="272" />
+        <wait ms="50" />
+        <subject_compare subject="low_power_mode" value="0" />
+        <click_at x="205" y="395" />
+        <wait ms="50" />
+        <subject_compare subject="battery_charging" value="1" />
+        <click_at x="205" y="395" />
+        <wait ms="50" />
+        <subject_compare subject="battery_charging" value="0" />
+    </steps>
+</test>
